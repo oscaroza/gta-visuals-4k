@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Connecting… – GTA Visuals 4K</title><link rel="stylesheet" href="style.css"></head>
+<body><main>
+<h1>Connecting to <b>GTA</b> Visuals 4K…</h1>
+<p id="msg">Sending the TikTok authorization back to the app running on this computer.</p>
+<div class="card" id="fallback" style="display:none">
+<p>If nothing happens, make sure the app is running, then copy this full address and paste it in the app
+(Settings → TikTok → “Étape 2”):</p>
+<p><code id="url"></code></p>
+</div>
+<script>
+// Relais : TikTok revient ici (https), on renvoie le code à l'app locale sur ce Mac.
+(function () {
+  var q = location.search || "";
+  var port = (q.match(/[?&]port=(\d+)/) || [])[1] || "8642";
+  document.getElementById("url").textContent = location.href;
+  setTimeout(function () { document.getElementById("fallback").style.display = "block"; }, 2500);
+  if (/[?&](code|error)=/.test(q)) {
+    location.replace("http://127.0.0.1:" + port + "/tiktok/callback/" + q);
+  } else {
+    document.getElementById("msg").textContent = "No authorization code in this address.";
+  }
+})();
+</script>
+</main></body></html>
